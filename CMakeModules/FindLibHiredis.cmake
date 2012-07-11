@@ -1,0 +1,14 @@
+# - Try to find the LibHiredis
+# Once done this will define
+#
+# LIBHIREDIS_FOUND - System has LibHiredis
+# LIBHIREDIS_INCLUDE_DIR - the LibHiredis include directory
+# LIBHIREDIS_LIBRARY 0 The library needed to use LibHiredis
+
+FIND_PATH(LIBHIREDIS_INCLUDE_DIR NAMES hiredis/hiredis.h)
+FIND_LIBRARY(LIBHIREDIS_LIBRARY NAMES hiredis)
+
+INCLUDE(FindPackageHandleStandardArgs)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(LibHiredis DEFAULT_MSG LIBHIREDIS_LIBRARY LIBHIREDIS_INCLUDE_DIR)
+MARK_AS_ADVANCED(LIBHIREDIS_INCLUDE_DIR LIBHIREDIS_LIBRARY)
+

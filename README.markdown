@@ -7,6 +7,7 @@ RProxy is a reverse proxy server written with performance and scale in mind.
 * [Libevhtp](http://github.com/ellzey/libevhtp)
 * [OpenSSL](http://openssl.org)
 * [Libconfuse](http://www.nongnu.org/confuse/)
+* [Libhiredis](https://github.com/antirez/hiredis)
 
 ## Building and installing
 

@@ -22,6 +22,7 @@ if (RPROXY_BUILD_DEPS)
 	set(LIBEVHTP_LIBRARY          evhtp)
 	set(LIBCONFUSE_LIBRARY        confuse)
 	set(OPENSSL_LIBRARIES         ssl crypto)
+	set(LIBHIREDIS_LIBRARY        hiredis)
 
 	link_directories(${RPROXY_DEPS_INSTALL}/lib/)
 	include_directories(${RPROXY_DEPS_INSTALL}/include/)
@@ -31,11 +32,13 @@ else()
 	find_package(libevhtp REQUIRED)
 	find_package(LibConfuse REQUIRED)
 	find_package(OpenSSL REQUIRED)
+	find_package(LibHiredis REQUIRED)
 
 	include_directories(
 		${LIBEVHTP_INCLUDE_DIR}
 		${OPENSSL_INCLUDE_DIR}/openssl
 		${LIBCONFUSE_INCLUDE_DIR}
+		${LIBHIREDIS_INCLUDE_DIR}
 	)
 endif()
 
@@ -47,6 +50,7 @@ set (RPROXY_EXTERNAL_LIBS
 			${LIBEVENT_OPENSSL_LIBRARY}
 			${LIBCONFUSE_LIBRARY}
 			${OPENSSL_LIBRARIES}
+			${LIBHIREDIS_LIBRARY}
 )
 
 # local system libraries
