@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-
+#pragma clang diagnostic ignored "-Wpointer-sign"
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -39,6 +40,7 @@
 #include <sys/resource.h>
 #endif
 
+#include "ip_id_map.h"
 #include "rproxy.h"
 
 static void downstream_pending_timeout(evutil_socket_t fd, short what, void * arg);
@@ -235,7 +237,7 @@ append_x_headers(rproxy_t * rproxy, evhtp_request_t * upstream_req) {
         }
     }
 
-    return 0;
+    return ip_id_map_append_x_headers(rproxy, upstream_req);
 } /* append_x_headers */
 
 int
@@ -880,6 +882,7 @@ rproxy_thread_init(evhtp_t * htp, evthr_t * thr, void * arg) {
     rproxy->server_cfg = server_cfg;
     rproxy->logger     = logger_init(server_cfg->logger);
     rproxy->evbase     = evbase;
+    rproxy->ip_id_map_c = ip_id_map_new(rproxy, server_cfg->ip_id_map);
 
     if (rproxy->logger) {
         logger_open(rproxy->logger);

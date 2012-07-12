@@ -6,6 +6,10 @@ set(REGRESS_SOURCES
 			${CMAKE_CURRENT_SOURCE_DIR}/../../src/request.c
 			${CMAKE_CURRENT_SOURCE_DIR}/../../src/ssl.c
 			${CMAKE_CURRENT_SOURCE_DIR}/../../src/logger.c
+			${CMAKE_CURRENT_SOURCE_DIR}/../../src/ip_id_map.c
+			${CMAKE_CURRENT_SOURCE_DIR}/../../src/cfg_ip_id_map.c
+			${CMAKE_CURRENT_SOURCE_DIR}/../../src/redis_server.c
+			${CMAKE_CURRENT_SOURCE_DIR}/../../src/redis_servers.c
 			${CMAKE_CURRENT_SOURCE_DIR}/../../test/unit/tinytest.c
 			regress_cfg.c
 			regress_main.c

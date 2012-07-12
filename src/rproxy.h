@@ -146,6 +146,7 @@ struct server_cfg {
     evhtp_ssl_cfg_t * ssl;                    /**< servers SSL configuration if enabled */
     headers_cfg_t   * headers;                /**< headers which are added to the backend request */
     logger_cfg_t    * logger;
+    struct ip_id_map_cfg * ip_id_map;
 
     TAILQ_HEAD(, downstream_cfg) downstreams; /**< a list of downstream configs */
     TAILQ_HEAD(, rewrite_cfg) rewrites;       /**< a list of rewrite configs */
@@ -330,6 +331,7 @@ struct rproxy {
     logger_t          * logger;               /**< the logging backend */
     server_cfg_t      * server_cfg;           /**< server configuration */
     downstream_t      * last_downstream_used; /**< the last downstream used to service a request. Used for round-robin loadbalancing. */
+    struct ip_id_map  * ip_id_map_c;          /**< the ip-id map */
     downstream_q_t      downstreams;          /**< list of downstreams */
     pending_request_q_t pending;              /**< list of pending upstream requests */
     int                 n_pending;            /**< number of pending requests */
@@ -420,6 +422,7 @@ unsigned char * ssl_x509_ext_tostr(evhtp_ssl_t *, const char *);
 logger_t * logger_init(logger_cfg_t *);
 void       logger_log_request(logger_t *, request_t *);
 void       logger_log_errorf(logger_t *, char * fmt, ...);
+void       logger_log_request_errorf(logger_t * logger, request_t * request, char * fmt, ...);
 
 #define logger_log_error(logger, fmt, ...)                  do {                                    \
         time_t t = time(NULL);                                                                      \

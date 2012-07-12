@@ -21,6 +21,7 @@
 #include <errno.h>
 
 #include "rproxy.h"
+#include "cfg_ip_id_map.h"
 
 #define DEFAULT_CIPHERS "ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-RC4-SHA:ECDHE-RSA-AES128-SHA:RC4-SHA:RC4-MD5:ECDHE-RSA-AES256-SHA:AES256-SHA:ECDHE-RSA-DES-CBC3-SHA:DES-CBC3-SHA:AES128-SHA"
 
@@ -111,6 +112,7 @@ static cfg_opt_t server_opts[] = {
     CFG_SEC("downstream",      downstream_opts, CFGF_MULTI),
     CFG_SEC("headers",         headers_opts,    CFGF_NONE),
     CFG_SEC("logging",         logging_opts,    CFGF_NONE),
+    CFG_SEC("ip-id-map",       ip_id_map_opts,  CFGF_NONE),
     CFG_END()
 };
 
@@ -733,6 +735,7 @@ server_cfg_parse(cfg_t * cfg) {
     scfg->ssl = ssl_cfg_parse(cfg_getsec(cfg, "ssl"));
     scfg->headers         = headers_cfg_parse(cfg_getsec(cfg, "headers"));
     scfg->logger          = logger_cfg_parse(cfg_getsec(cfg, "logging"));
+    scfg->ip_id_map       = ip_id_map_cfg_parse(cfg_getsec(cfg, "ip-id-map"));
 
     n_downstreams         = cfg_size(cfg, "downstream");
     n_rewrites = cfg_size(cfg, "rewrite");
