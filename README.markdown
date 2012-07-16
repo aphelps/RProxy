@@ -281,7 +281,6 @@ There are currently two log types, each with their own specific options.
 	} 
 </pre>
 
-
 <table>
   <tr>
     <th>Format String</th><th>Definition</th>
@@ -305,3 +304,34 @@ There are currently two log types, each with their own specific options.
 </table>
 
 
+### IP-ID Maps
+
+This branch adds the ability to send an extra header to servers.
+
+The content of this header is the value associated to a key in a Redis
+database.
+
+The key is the client IP.
+
+    ip-id-map {
+       type = redis
+       enabled = true
+       header-name = "X-User-ID"
+
+       redis-servers {
+          get-cmd-tpl = "GET rproxy-ip-id:%s"
+
+          redis-server {
+             server = 127.0.0.1
+             port = 1000
+          }
+          redis-server {
+             server = 127.0.0.2
+             enabled = false
+          }
+       }
+    }
+
+* `header-name` is the name of the header sent to servers
+* `get-cmd-tpl` is a template. `%s` will be replaced by the client IP.
+* One or more servers may be listed.
