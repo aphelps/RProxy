@@ -39,7 +39,7 @@ ip_id_map_free(ip_id_map_t * ip_id_map_c)
 }
 
 static char *
-ip_id_map_get_ip_from_request(char hbuf[NI_MAXHOST],
+ip_id_map_get_ip_from_request(char *hbuf, size_t hbuf_len,
                               evhtp_request_t * upstream_req)
 {
     evhtp_connection_t * conn = upstream_req->conn;
@@ -50,7 +50,7 @@ ip_id_map_get_ip_from_request(char hbuf[NI_MAXHOST],
     case AF_INET: {
         struct sockaddr_in * saddr = (struct sockaddr_in *) saddr_;
         if (evutil_inet_ntop(AF_INET, &saddr->sin_addr,
-                             hbuf, sizeof saddr) != 0) {
+                             hbuf, hbuf_len) == NULL) {
             return NULL;
         }
         break;
@@ -58,7 +58,7 @@ ip_id_map_get_ip_from_request(char hbuf[NI_MAXHOST],
     case AF_INET6: {
         struct sockaddr_in6 * saddr = (struct sockaddr_in6 *) saddr_;
         if (evutil_inet_ntop(AF_INET6,
-                             &saddr->sin6_addr, hbuf, sizeof saddr) != 0) {
+                             &saddr->sin6_addr, hbuf, hbuf_len) == NULL) {
             return NULL;
         }
         break;
@@ -78,7 +78,7 @@ ip_id_map_get_id_from_ip(rproxy_t * rproxy,
     if (ip_id_map_c == NULL) {
         return NULL;
     }
-    if (ip_id_map_get_ip_from_request(ip, upstream_req) == NULL) {
+    if (ip_id_map_get_ip_from_request(ip, sizeof (ip), upstream_req) == NULL) {
         return NULL;
     }
     id = redis_servers_get_id_from_ip(ip, ip_id_map_c->redis_servers_c);
