@@ -11,7 +11,7 @@ ip_id_map_new(rproxy_t * rproxy, ip_id_map_cfg_t * ip_id_map)
 {
     ip_id_map_t * ip_id_map_c;
 
-    if (ip_id_map->header_name == NULL) {
+    if (ip_id_map == NULL || ip_id_map->header_name == NULL) {
         return NULL;
     }
     if (!(ip_id_map_c = calloc(sizeof(ip_id_map_t), 1))) {
