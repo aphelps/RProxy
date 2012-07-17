@@ -55,7 +55,7 @@ redis_server_send_command_get_str(redis_server_t * redis_server_c,
         return NULL;
     }
     reply = redisCommand(redis_server_c->redis_context, cmd);
-    if (reply == NULL) {
+    if (reply == NULL || reply->str == NULL) {
         return NULL;
     }
     id = strdup(reply->str);
